@@ -29,3 +29,13 @@ jobs:
           name: test-s3bucket
           template: cfn/s3.yml
           capabilities: CAPABILITY_IAM
+        continue-on-error: true
+    
+      - name: Deploy Lambda Function CloudFormation Stack
+        id: lambda-function
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: imba-LambdaFunction
+          template: cfn/lambda.yml
+          capabilities: CAPABILITY_IAM
+        continue-on-error: true
