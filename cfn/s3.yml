@@ -1,11 +1,11 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'CloudFormation template for S3 buckets setup for object copying.'
+Description: 'CloudFormation template for S3 buckets'
 
 Parameters:
   BucketName:
     Type: String
     Description: Name for the raw data S3 bucket
-    Default: imba-test
+    Default: imbastanley1987
 
 Resources:
   RawDataBucket:
