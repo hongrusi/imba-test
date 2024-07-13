@@ -33,6 +33,7 @@ jobs:
         run: |
           BUCKET_NAME=$(aws cloudformation describe-stacks --stack-name test-s3bucket --query "Stacks[0].Outputs[?OutputKey=='ImbaStanleyBucketName'].OutputValue" --output text)
           echo "BUCKET_NAME=${BUCKET_NAME}" >> $GITHUB_ENV
+          echo "Bucket name: ${BUCKET_NAME}"
 
       - name: Zip Lambda function
         run: zip -j lambda.zip ./script/lambda.py
