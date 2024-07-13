@@ -30,7 +30,3 @@ Resources:
                 Action:
                   - 's3:GetObject'
                 Resource: !Sub 'arn:aws:s3:::${RawDataBucket}/*'
-              - Effect: Allow
-                Action:
-                  - 's3:PutObject'
-                Resource: !Sub 'arn:aws:s3:::${DestinationBucket}/*'
