@@ -34,18 +34,3 @@ Resources:
                 Action:
                   - 's3:PutObject'
                 Resource: !Sub 'arn:aws:s3:::${DestinationBucket}/*'
-
-
-  LambdaPermission:
-    Type: 'AWS::Lambda::Permission'
-    Properties:
-      FunctionName: !Ref LambdaFunction
-      Action: "lambda:InvokeFunction"
-      Principal: "s3.amazonaws.com"
-      SourceArn: !Sub 'arn:aws:s3:::${RawDataBucket}'
-
-
-Outputs:
-  LambdaFunctionArn:
-    Description: 'Name of the Lambda function'
-    Value: !GetAtt LambdaFunction.Arn
