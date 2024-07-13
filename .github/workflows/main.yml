@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main  # Trigger on pushes to the main branch
-  
-#      workflow_dispatch: # Trigger manually on workflow
-
 
 jobs:
   deploy_resources:
@@ -23,21 +20,26 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy S3 Buckets CloudFormation Stack        
-        id: s3-buckets
         uses: aws-actions/aws-cloudformation-github-deploy@v1.0.4
+        id: deploy-s3
         with:
           name: test-s3bucket
           template: cfn/s3.yml
           capabilities: CAPABILITY_IAM
           no-fail-on-empty-changeset: 1
 
-    
+      - name: Zip Lambda function
+        run: zip -j lambda.zip ./script/lambda.py
+
+      - name: Upload Lambda Function into S3 bucket
+        run: aws s3 cp lambda.zip s3://imbastanley1987/lambda.zip
+        if: steps.deploy-s3.outcome == 'success'
+
       - name: Deploy Lambda Function CloudFormation Stack
-        id: lambda-function
         uses: aws-actions/aws-cloudformation-github-deploy@v1
+        if: success()
         with:
           name: imba-LambdaFunction
           template: cfn/lambda.yml
           capabilities: CAPABILITY_IAM
           no-fail-on-empty-changeset: 1
-        
