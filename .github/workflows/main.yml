@@ -29,6 +29,7 @@ jobs:
           name: test-s3bucket
           template: cfn/s3.yml
           capabilities: CAPABILITY_IAM
+          no-fail-on-empty-changeset: 1
         continue-on-error: true
     
       - name: Deploy Lambda Function CloudFormation Stack
@@ -38,4 +39,6 @@ jobs:
           name: imba-LambdaFunction
           template: cfn/lambda.yml
           capabilities: CAPABILITY_IAM
+          no-fail-on-empty-changeset: 1
         continue-on-error: true
+        
