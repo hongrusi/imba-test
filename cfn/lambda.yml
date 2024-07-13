@@ -38,7 +38,7 @@ Resources:
       Role: !GetAtt LambdaExecutionRole.Arn # This indicates the function depends on the IAM role. The creation orderis automatic
       Code:
         S3Bucket: imbastanley1987
-        S3Key: index.zip
+        S3Key: lambda.zip
       Runtime: python3.12
       Timeout: 15
       
