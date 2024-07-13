@@ -30,3 +30,20 @@ Resources:
                 Action:
                   - 's3:GetObject'
                 Resource: !Sub 'arn:aws:s3:::${RawDataBucket}/*'
+  LambdaFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-test'
+      Handler: index.handler
+      Role: !GetAtt LambdaExecutionRole.Arn # This indicates the function depends on the IAM role. The creation orderis automatic
+      Runtime: python3.12
+      Timeout: 15
+      
+
+  LambdaPermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      FunctionName: !Ref LambdaFunction
+      Action: "lambda:InvokeFunction"
+      Principal: "s3.amazonaws.com"
+      SourceArn: !Sub 'arn:aws:s3:::${RawDataBucket}'
