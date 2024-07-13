@@ -28,11 +28,17 @@ jobs:
           capabilities: CAPABILITY_IAM
           no-fail-on-empty-changeset: 1
 
+      - name: Get S3 Bucket Output
+        id: get-bucket-name
+        run: |
+          BUCKET_NAME=$(aws cloudformation describe-stacks --stack-name test-s3bucket --query "Stacks[0].Outputs[?OutputKey=='ImbaStanleyBucketName'].OutputValue" --output text)
+          echo "BUCKET_NAME=${BUCKET_NAME}" >> $GITHUB_ENV
+
       - name: Zip Lambda function
         run: zip -j lambda.zip ./script/lambda.py
 
       - name: Upload Lambda Function into S3 bucket
-        run: aws s3 cp lambda.zip s3://imbastanley1987/lambda.zip
+        run: aws s3 cp lambda.zip s3://$BUCKET_NAME/lambda.zip
         if: steps.deploy-s3.outcome == 'success'
 
       - name: Deploy Lambda Function CloudFormation Stack
