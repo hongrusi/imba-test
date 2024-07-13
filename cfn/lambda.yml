@@ -36,9 +36,9 @@ Resources:
       FunctionName: !Sub '${AWS::StackName}-test'
       Handler: index.handler
       Role: !GetAtt LambdaExecutionRole.Arn # This indicates the function depends on the IAM role. The creation orderis automatic
-      code:
-        s3bucket: imbastanley1987
-        s3key: index.zip
+      Code:
+        S3Bucket: imbastanley1987
+        S3Key: index.zip
       Runtime: python3.12
       Timeout: 15
       
